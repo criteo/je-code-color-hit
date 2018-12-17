@@ -1,0 +1,10 @@
+Cython
+facebook-sdk
+kivy
+kivy.deps.glew
+kivy.deps.gstreamer
+kivy.deps.sdl2
+numpy
+opencv-python
+Pillow
+pypiwin32

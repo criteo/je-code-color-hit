@@ -1,0 +1,64 @@
+Exercise_1: (Modify anim_ball, Run main.py)
+
+        def on_touch_down(self, touch):
+            initial_y = Window.height / 5 - self.height / 2
+            initial_x = (Window.width / 2 - self.width / 2)
+            y = Window.height / 10 + self.y
+
+            Animation.cancel_all(self)
+            animation = Animation(x=initial_x, y=y, duration=0.3, t='out_cubic')
+            animation += Animation(x=initial_x, y=initial_y, duration=0.3, t='in_cubic')
+            animation.start(self)
+
+
+Exercise_2: (Modify builder.py, Run main.py)
+        #1:
+            <AnimBall>:
+                canvas:
+                    Color:
+                        rgba: self.r, self.g, self.b, 1
+                    Ellipse:
+                        pos: self.pos
+                        size: self.size
+                        source: '../images/cat_ball.jpg'
+
+        #2:
+            <Root>:
+                canvas:
+                    Rectangle:
+                        size: self.size
+                        source: '../images/cat1.jpg'
+                Label:
+                    font_size: self.width / 5
+                    pos:  root.width / 4 - self.width / 2, root.center_y/80 - self.height/3
+                    text: "Max score " + str(root.maxScore)
+
+        #3:
+        <ColorBall>:
+            canvas:
+                Color:
+                    rgba: self.r, self.g, self.b, 1
+                Ellipse:
+                    pos: self.pos
+                    size: self.size
+                    source: '../images/cat_ball.png'
+
+Exercise_3: (Modify anim_ball.py, Run main.py)
+        return color_ball.y - color_ball.width / 2 <= self.y + self.width / 2
+
+
+Exercise_4:(Modify anim_ball.py, Run main.py)
+        for i in range(nb_rectangles):
+            self.add_widget(ClockRect())
+
+Exercise_5
+        # 1:
+         if self.check_color(r):
+                if check_collision(b, r.x, r.width, r.y, r.height):
+                    score += 10
+            else:
+                if check_collision(b, r.x, r.width, r.y, r.height):
+                    attempt -= 1
+        # 2:
+        if self.attempt <= 0:
+            self.start()

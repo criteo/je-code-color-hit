@@ -1,0 +1,199 @@
+﻿# Journée Je Code: Objective is to introduce coding to teenagers using Python programming language
+The code is not pythonic as the objective is to introduce basic programming such as if condition and for loops.<br>
+This code is not intended for commercial purpose.
+
+# ColorHit Game Description
+colorHit is a small click based game where the objective is to score the maximum points:<br>
+- the player can act on a small ball called anim_ball by clicking on the screen
+- anim_ball can move only on one direction on y axes (vertically)
+- the display the click detection and animation are handled using kivy library.
+
+The score is updated if the anim_ball hits a rectangle with the same color. If it hits a different colored rectangle<br>
+then the player looses one attempt. The best score is then saved. The save is temporarily as it is deleted if the player<br>
+closes the game window.
+
+The game allows the player to change the color of anim_ball by hitting another colored ball that appears during the game.<br>
+It is called color_ball. Anim_ball takes automatically the color of the color_ball on hit.
+
+The folder *demo* contains the full game and includes some extensions that won't be described in the exercises such as the freeze at<br>
+the beginning of each game start that allows the player to be prepared to start the game or understand that he losts all<br>
+his attempts and had to start again.
+![](images_readme/demo.mov)
+
+# Exercises
+The objective is to introduce coding as well as game programming.
+
+The exercises are split in different folders where teenagers have to start from exercise_1 to finish with exercise_5.<br>
+The exercises don't contain the full game.
+
+## To start: let's understand the game
+The best way to understand what you have to code is to play with the game to start thinking about the different problematics,<br>
+and the game's rules.
+
+To execute the program run main_solution.py by using: 
+- the command line `python3 demo/main_solution.py`
+- via the editor's run.
+You can play with the game! It's a click based game so don't forget to click in the game window.
+
+Note that for all the exercises to run and see the code you need to run `main.py` from each execise folder.
+
+## Exercise 1: Let's start with the animation!
+In games there are two types of actions on the game widgets. (a widget is an object of the game example color_ball anim_ball ...)
+- either to give the control to the player (under some limitations)
+- or it is your application that controls the widgets.
+In this exercise we will see the the click based action where the anim_ball is animated on click.
+
+Here the objective is not to code the animation but to use a library that detects a click<br>
+then automatically activates the animation.<br>
+Open anim_ball.py it's there the code to modify.
+
+First let's explain the code.<br>
+The header: to import the needed libraries or codes
+
+![](images_readme/ex1_header.png)
+
+init: to initialise the position in the game window<br>
+on_touch_down: the function that detects a click and activates the function on touch down.
+
+![](images_readme/ex1_on_touch_down.png)
+
+The objective is to modify anim_ball.py to animate the ball to do a realistic jump (let's simulate the feel of gravity)<br>
+If you try to jump multiple times very fast the animation would be non smooth. the superposition of multiple animations<br>
+is not allowed we need to code this part. Use Animation.cancel_all(self) before the animation to allow multiple jumps<br>
+
+This what you could get without using `cancel_all` using different types of animations
+
+![](images_readme/ex1_lin1.mov)
+![](images_readme/ex1_lin2.mov)
+
+The solution should look like this
+
+![](images_readme/ex1_gravity.mov)
+
+## Exercise2: Let's understand the graphics
+This exercise is made to distinguish between the widgets used in code and the graphic to create the shapes of the widgets.<br>
+Example you may noticed in the game we use multiple rectangles. In the code we use one widget for one rectangle as the<br>
+rectangles are independent objects where each one of them has its own size and position.<br>
+Those internal properties are used to detect hits.<br>
+The choice of using one widget per rectangle is related to the hit detection as it is easy to compare the position of the anim_ball<br>
+with each position of each rectangle (using internal properties).
+
+But for the graphic no need to create one shape for each rectangle!. We need only one!
+
+
+### How does this works?
+When we want to create a widget (rectangle) we link it to the shape in graphic and then we can rescale it and/or change its position.
+
+### Let's play with the shapes!
+open `builder.py` it's the first part of the exercise2.
+
+![](images_readme/ex2_graphics.png)
+
+1- Add an image for AnimBall. use: source: `../images/cat_ball.jpg` in Ellipse.<br>
+You can play with source by putting personalized images. You can download your image and put it in images repository.<br>
+Then use the right link: source: `../images/<name of your image>`
+
+2- Add an image for the Root. Use: source: '../images/cat1.jpg' in the right rectangle. Be careful about mixing colors<br>
+(if we add black color with any other color it give us black)
+
+3- Add the text maxScore
+
+4- ColorBall is missing lets code it ! we want a ball similar to AnimBall
+
+To understand the use of widgets open `root.py` and add another ClockRect
+
+## Exercise 3: Hierarchical widgets.
+To change the color of anim_ball we need to connect the widget anim_ball and color_ball.<br>
+We then check the position and then update the color. As anim_ball has to be connected to color_ball but also the rectangles,<br>
+we introduce a notion of hierarchy of widgets. Anim_ball becomes owner of all the other widgets. This gives rights to Anim_ball<br>
+to access to the internal properties of its widgets. It become easier to check if anim_ball hits a rectangle or a color_ball.<br>
+
+In this exercise we are looking at conditions: open `anim_ball.py`. The objective is to code check_hit_ball.<br>
+we need to change the color at collision.
+
+![](images_readme/ex3_hit.png)
+
+Be careful with using equalities for games! The display of images and position checking are done frame by frame.<br>
+We are evolving in a descrete time. If you put equal then it is very unlikely you get equal positions at frame display.<br>
+In game coding try to always use inequalities.
+
+Here is an example: first video coded using `==` the second using `<=`
+![](images_readme/ex3_col.mov)
+![](images_readme/ex3_non_col.mov)
+
+# Exercise 4: playing with for loop
+The for loop works as follows:
+
+![](images_readme/ex4_for.mov)
+
+open `anim_ball.py`  we are changing `add_rectangles`. Run the code before modifying it. Only one rectangle appears.<br>
+This is because in `add_rectangles` we put only one rectangle.
+
+Use the for loop to add multiple rectangles (10 rectangles)
+
+Use the variable `nb_rectangles` that specify the number of rectangles that we would like to display.
+
+### Let's understand how the variable works!
+Look at init in `anim_ball.py`
+
+![](images_readme/ex4_var.png)
+
+In the initialisation there is a call to run `add_rectangles`: `add_rectangles(10)`. It's variable `nb_rectangles`,<br>
+is set to be equal to 10. We can then use `nb_rectangles` while coding the loop.<br>
+
+To check if you code it correctly change in the init `add_rectangles(10)` by `add_rectangles(3)` and then run the main.py.
+You should see 3 rectangles instead of 10.
+
+# Exercise 5: using if condition: let's update the score!
+Here is how the if condition works:
+![](images_readme/ex5_if.png)
+
+Open `anim_ball.py`. The objective is the update attempt and score. Here are the rules to follow:
+
+1- The score increase if we have the same color of the rectangle and anim_ball
+
+2- The attempt decrease if we don't have the same color of the rectangle and anim_ball<br>
+use `self.check_color(r)` and `self.check_collision(b, r.x, r.width, r.y, r.height)` to do the updates<br>
+The second file to modify is `root.py`. The rule to follow:
+
+3- if we find that attempt become less then 0 we should restart!
+In `update_score_and_attempt` update attempt. Use `self.start()` and `self.attempt`
+
+
+# Hacking the game: It's time to be creative!
+Keep in mind that the objective of creating a game is to make it harder over time to keep the players playing.<br>
+The objective is to change some rules of the game to personalized it. You can change any file of demo.<br>
+
+Here are some examples of what you can do:
+
+![Increase the speed](images_readme/hack_speed.mov)
+
+![Add rectangles on clicks](images_readme/hack_click.mov)
+
+![Add a lot of rectangles](images_readme/hack_multiple.mov)
+
+# Watch out for bugs
+for loop or if condition: don't forget `:` after a for loop or an if condition.
+
+Indentation is important: after a loop or an if condition, you need to use a new indented line.
+
+Read the error message: spend time to understand what it means!
+
+Don't hesitate to google the error message to better understand your error and then know how to fix it.
+
+If you are blocked you can find the solutions in Solution.txt
+
+# Installation on Windows OS
+The application is written in Python using Kivy framework.
+
+1- Download or clone the projects locally
+2- Download and install Python (Anaconda) : https://repo.continuum.io/archive/Anaconda3-5.0.0-Windows-x86_64.exe)
+Tested with anaconda 3.5.0
+3- Open the Start Menu, and type **Anaconda Prompt**
+4- Change directory to the project folder
+5- Install all the dependency libraries
+    - `pip install -r requirement.txt`
+
+Recommended editors:
+- Spyder, automatically installed with Anaconda
+- PyCharm, select "community" to be installed (https://www.jetbrains.com/pycharm/download/download-thanks.html?platform=windows&code=PCC)

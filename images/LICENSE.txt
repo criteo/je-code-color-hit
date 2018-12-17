@@ -1,0 +1,5 @@
+The licenses for the images:
+
+cat1.jpg: from [pixels] (https://www.pexels.com/photo/brown-and-black-cat-37337/) where they precise the license: CC0 License
+cat2.jpeg: from [pixels] (https://www.pexels.com/photo/adorable-animal-cat-cat-s-eyes-236603/) where they precise the license: CC0 License
+cat_ball.jpg: from [pixels] (https://www.pexels.com/photo/animal-pet-fur-head-33537/) where they precise the license: CC0 License
